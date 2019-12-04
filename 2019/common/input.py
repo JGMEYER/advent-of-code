@@ -10,5 +10,5 @@ def read_file(filepath: str) -> List[str]:
 
 def read_input(day_num: int) -> List[str]:
     """Read the input file for a particular day"""
-    filepath = os.path.join("inputs", f"day{day_num}.txt")
+    filepath = os.path.abspath(f"inputs/day{day_num}.txt")
     return read_file(filepath)
