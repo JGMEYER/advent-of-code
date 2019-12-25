@@ -45,7 +45,7 @@ class IntcodeParser:
 
 
 def part1() -> int:
-    ops_str = read_input(2)[0]
+    ops_str = read_input(day=2)[0]
     parser = IntcodeParser(ops_str)
 
     # 1202 program alarm state
@@ -58,7 +58,7 @@ def part1() -> int:
 
 
 def part2() -> int:
-    ops_str = read_input(2)[0]
+    ops_str = read_input(day=2)[0]
 
     for noun in range(100):
         for verb in range(100):

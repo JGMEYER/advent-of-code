@@ -33,12 +33,12 @@ def _calculate_total_fuel(fuel_func: Callable, masses: List[int]) -> int:
 
 
 def part1() -> int:
-    masses = [int(line) for line in read_input(1)]
+    masses = [int(line) for line in read_input(day=1)]
     return _calculate_total_fuel(_fuel_required, masses)
 
 
 def part2() -> int:
-    masses = [int(line) for line in read_input(1)]
+    masses = [int(line) for line in read_input(day=1)]
     return _calculate_total_fuel(_recursive_fuel_required, masses)
 
 
