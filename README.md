@@ -3,12 +3,20 @@ More information at https://adventofcode.com/2021/about
 
 Setup:
 
-`pipenv install`
+```bash
+pipenv install
+```
 
 Running tests:
 
-`pipenv run pytest 2021/tests/test_day1.py`
+```bash
+cd 2021
+pipenv run pytest tests/test_day1.py
+```
 
 Running solution:
 
-`pipenv run python 2021/day1.py`
+```bash
+cd 2021
+pipenv run python day1.py
+```
