@@ -1,12 +1,14 @@
 from common.input import read_input
 
+def __helper_function():
+    pass
 
 def part1():
-    pass
+    input = read_input(day=)
 
 
 def part2():
-    pass
+    input = read_input(day=)
 
 
 if __name__ == "__main__":

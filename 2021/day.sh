@@ -2,7 +2,8 @@
 
 main_file=day$1.py
 test_file=tests/test_day$1.py
-input_file=inputs/day$1.txt
+main_input_file=inputs/day$1.txt
+test_input_file=tests/test_inputs/test_day$1.txt
 
 if test -f $main_file; then
     echo "$main_file already exists"
@@ -16,8 +17,14 @@ else
     cp tests/test_template.py $test_file
 fi
 
-if test -f $input_file; then
-    echo "$input_file already exists"
+if test -f $main_input_file; then
+    echo "$main_input_file already exists"
 else
-    touch $input_file
+    touch $main_input_file
+fi
+
+if test -f $test_input_file; then
+    echo "$test_input_file already exists"
+else
+    touch $test_input_file
 fi
