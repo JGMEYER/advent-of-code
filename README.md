@@ -7,11 +7,18 @@ Setup:
 pipenv install
 ```
 
+Starting a new day / work on a day:
+
+```bash
+cd 2021
+./day 1
+```
+
 Running tests:
 
 ```bash
 cd 2021
-pipenv run pytest tests/test_day1.py
+pipenv run pytest
 ```
 
 Running solution:

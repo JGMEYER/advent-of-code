@@ -1,5 +1,6 @@
-from common.input import read_test_input
+from common.input import auto_read_input
 
-# def test_():
-#     input = read_test_input(day=)
-#     assert True
+
+def test_():
+    input = auto_read_input()
+    assert False

@@ -1,14 +1,22 @@
-from common.input import read_input
+import re
 
-def __helper_function():
-    pass
+from common.input import auto_read_input
+
+
+def _parse_input():
+    input = auto_read_input()
+    ## Start here
+    return input
+
 
 def part1():
-    input = read_input(day=)
+    input = _parse_input()
+    return None
 
 
 def part2():
-    input = read_input(day=)
+    input = _parse_input()
+    return None
 
 
 if __name__ == "__main__":
