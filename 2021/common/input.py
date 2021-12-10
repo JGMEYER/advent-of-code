@@ -49,9 +49,9 @@ def auto_read_input() -> List[str]:
 
     # This is generally probably a bad idea...
     filename = inspect.stack()[1].filename
-    file_pattern = r".*(test_)?day(\d+).py"
+    file_pattern = r"(test_)?day(\d+)\.py$"
 
-    match = re.match(file_pattern, filename)
+    match = re.search(file_pattern, filename)
     if not match:
         raise Exception(
             f'Invoker filename {filename} must match pattern "{file_pattern}"'
