@@ -3,19 +3,18 @@ import re
 from common.input import auto_read_input
 
 
-def _parse_input():
-    input = auto_read_input()
+def _parse_input(input_str):
     ## Start here
-    return input
+    return None
 
 
 def part1():
-    input = _parse_input()
+    _ = _parse_input(auto_read_input())
     return None
 
 
 def part2():
-    input = _parse_input()
+    _ = _parse_input()
     return None
 
 
