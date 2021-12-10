@@ -28,3 +28,8 @@ if test -f $test_input_file; then
 else
     touch $test_input_file
 fi
+
+# open all in vscode if available
+if command -v code &> /dev/null; then
+    code ${main_file} ${test_file} ${main_input_file} ${test_input_file}
+fi
