@@ -84,9 +84,9 @@ class Basin:
         return len(self._points)
 
 
-def _parse_input(input_str):
+def _parse_input(lines):
     ## Start here
-    heights = [[int(h) for h in line] for line in input_str]
+    heights = [[int(h) for h in line] for line in lines]
     return HeightMap(heights)
 
 
