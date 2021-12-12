@@ -62,5 +62,4 @@ def auto_read_input(*, suffix=None) -> List[str]:
     test, day = bool(groups[0]), int(groups[1])
 
     filepath = input_filepath(day=day, test=test, suffix=suffix)
-    print(filepath)
     return read_file(filepath)
