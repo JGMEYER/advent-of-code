@@ -1,5 +1,3 @@
-import re
-
 from common.input import auto_read_input
 
 
