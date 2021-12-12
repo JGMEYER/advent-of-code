@@ -7,12 +7,13 @@ def read_file(filepath: str) -> List[str]:
         return f.read().strip().split("\n")
 
 
-def input_filepath(*, day: int, test: bool = False) -> str:
+def input_filepath(*, day: int, test: bool = False, suffix=None) -> str:
     """Returns paths to both question and test inputs"""
+    suffix_str = f"_{str(suffix)}" if suffix else ""
     return (
-        f"tests/test_inputs/test_day{day}.txt"
+        f"tests/test_inputs/test_day{day}{suffix_str}.txt"
         if test
-        else f"inputs/day{day}.txt"
+        else f"inputs/day{day}{suffix_str}.txt"
     )
 
 
@@ -42,7 +43,7 @@ def read_test_input(*, day: int) -> List[str]:
     return read_file(filepath)
 
 
-def auto_read_input() -> List[str]:
+def auto_read_input(*, suffix=None) -> List[str]:
     """Read the input file for a particular day based on the .py file invoking the function"""
     import inspect
     import re
@@ -60,5 +61,6 @@ def auto_read_input() -> List[str]:
     groups = match.groups()
     test, day = bool(groups[0]), int(groups[1])
 
-    filepath = input_filepath(day=day, test=test)
+    filepath = input_filepath(day=day, test=test, suffix=suffix)
+    print(filepath)
     return read_file(filepath)
