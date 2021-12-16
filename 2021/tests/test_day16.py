@@ -2,7 +2,6 @@ from day16 import (
     _parse_input,
     hex_str_to_bin_str,
     LiteralPacket,
-    OperatorPacket,
     MessageParser,
 )
 from common.input import auto_read_input
@@ -45,7 +44,6 @@ def test_MessageParser_parse():
 
     packet = MessageParser.parse("620080001611562C8802118E34")
     version_sum = packet.sum_version()
-    print(packet)
     assert version_sum == 12
 
     packet = MessageParser.parse("C0015000016115A2E0802F182340")
