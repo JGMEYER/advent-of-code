@@ -61,6 +61,40 @@ class SnailNum(dict):
     def magnitude(self):
         return self._magnitude(0)
 
+    @classmethod
+    def _merge(cls, a, b):
+        # NOTE: Making this a heap made merging unnecessarily complex
+        result = SnailNum()
+
+        def _traverse(num, num_idx, result, result_idx):
+            num_left_idx = num.get_left_idx(num_idx)
+            num_right_idx = num.get_right_idx(num_idx)
+
+            result_left_idx = result.get_left_idx(result_idx)
+            result_right_idx = result.get_right_idx(result_idx)
+
+            left = num.get(num_left_idx)
+            right = num.get(num_right_idx)
+
+            if left is not None and right is not None:
+                result[result_idx] = EMPTY_NODE
+                _traverse(num, num_left_idx, result, result_left_idx)
+                _traverse(num, num_right_idx, result, result_right_idx)
+            elif left is None and right is None:
+                result[result_idx] = num[num_idx]
+            else:
+                raise ValueError(
+                    f"SnailNum does not contain a pair at parent {num_idx}, left {num_left_idx}, right {num_right_idx}"
+                )
+
+        _traverse(a, 0, result, 1)  # all a goes to result head's left
+        _traverse(b, 0, result, 2)  # all b goes to result head's right
+
+        return result
+
+    def add(self, other):
+        return SnailNum._merge(self, other)
+
 
 class SnailNumParser:
     @classmethod
@@ -83,7 +117,6 @@ class SnailNumParser:
                 pass
             elif match == ",":
                 c_idx = snum.get_parent_idx(c_idx)
-                # c_idx = snum.get_right_idx(c_idx)
                 right_idx = snum.get_right_idx(c_idx)
                 right = snum.get(right_idx)
                 if not right:
