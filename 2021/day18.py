@@ -1,4 +1,6 @@
+import math
 import re
+
 from common.input import auto_read_input
 
 
@@ -22,11 +24,7 @@ class SnailNum(dict):
         self[0] = HEAD_NODE
 
     def __repr__(self):
-        keys = self.keys()
-        arr = [None] * (max(keys) + 1)
-        for idx in keys:
-            arr[idx] = self.get(idx)
-        return str(arr)
+        return SnailNumParser.unparse(self)
 
     @classmethod
     def from_list(cls, l):
@@ -58,6 +56,14 @@ class SnailNum(dict):
     def get_parent(self, idx):
         parent_idx = SnailNum.get_parent_idx(idx)
         return parent_idx, self.get(parent_idx)
+
+    @classmethod
+    def depth(cls, idx):
+        depth = 0
+        while idx > 0:
+            idx = SnailNum.get_parent_idx(idx)
+            depth += 1
+        return depth
 
     def _foreach(self, func, order, cur_idx=0):
         cur = self.get(cur_idx)
@@ -139,8 +145,79 @@ class SnailNum(dict):
         return result
 
     def add(self, other):
+        # result = SnailNum._merge(self, other)
+
+        # def _dfs(cur_idx, depth):
+        #     cur = result.get(cur_idx)
+
+        #     if cur is None:
+        #         return
+
+        #     print()
+        #     print(result)
+        #     print(cur, f"depth:{result.depth(cur_idx)}")
+
+        #     left_idx, left = result.get_left(cur_idx)
+        #     right_idx, right = result.get_right(cur_idx)
+
+        #     if depth == 4 and cur == EMPTY_NODE:
+        #         print("e")
+        #         result._explode(cur_idx)
+        #         return
+
+        #     if type(cur) == int:
+        #         if cur >= 10:
+        #             print("s")
+        #             result._split(cur_idx)
+        #         else:
+        #             print("r")
+        #             return
+
+        #     _dfs(left_idx, depth + 1)
+        #     _dfs(right_idx, depth + 1)
+
+        # _dfs(0, 0)
+
+        # return result
+
+        # ====
+
         result = SnailNum._merge(self, other)
-        # result._explode()
+
+        idx = 0
+        order_type = SnailNum.ORDER_INORDER
+        order_traversal = []
+
+        def func(k, v):
+            order_traversal.append((k, v))
+
+        result.foreach(func, order_type)
+
+        # print()
+        # print(result)
+        # print(order_traversal)
+
+        while idx < len(order_traversal):
+            k, v = order_traversal[idx]
+            # i.e. parent of nodes 4 levels deep
+            # print(k, v, f"depth:{self.depth(k)}")
+            if type(v) == int and self.depth(k) == 5:
+                # print("c")
+                parent_idx = SnailNum.get_parent_idx(k)
+                result._explode(parent_idx)
+                idx = 0
+                order_traversal = []
+                result.foreach(func, order_type)
+                # print(result)
+            elif type(v) == int and v > 9:
+                # print("d")
+                result._split(k)
+                idx = 0
+                order_traversal = []
+                result.foreach(func, order_type)
+                # print(result)
+            idx += 1
+
         return result
 
     def _explode(self, idx):
@@ -171,6 +248,18 @@ class SnailNum(dict):
         self[idx] = 0
         del self[left_idx]
         del self[right_idx]
+
+    def _split(self, idx):
+        cur = self[idx]
+        left_idx = self.get_left_idx(idx)
+        right_idx = self.get_right_idx(idx)
+
+        new_left = math.floor(cur / 2)
+        new_right = math.ceil(cur / 2)
+
+        self[idx] = EMPTY_NODE
+        self[left_idx] = new_left
+        self[right_idx] = new_right
 
 
 class SnailNumParser:
@@ -204,6 +293,21 @@ class SnailNumParser:
 
         return snum
 
+    @classmethod
+    def unparse(cls, snum):
+        def _dfs(cur_idx):
+            cur = snum.get(cur_idx)
+            left_idx = SnailNum.get_left_idx(cur_idx)
+            right_idx = SnailNum.get_right_idx(cur_idx)
+
+            if cur in (EMPTY_NODE, HEAD_NODE):
+                return [_dfs(left_idx), _dfs(right_idx)]
+            elif type(cur) == int:
+                return cur
+
+        arr = _dfs(0)
+        return str(arr).replace(" ", "")
+
 
 def _parse_input(lines):
     ## Start here
@@ -212,8 +316,12 @@ def _parse_input(lines):
 
 
 def part1():
-    _ = _parse_input(auto_read_input())
-    return None
+    snums = _parse_input(auto_read_input())
+    result = snums[0]
+
+    for idx in range(1, len(snums)):
+        result = result.add(snums[idx])
+    return result.magnitude()
 
 
 def part2():
