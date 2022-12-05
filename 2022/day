@@ -1,0 +1,35 @@
+#!/bin/bash
+
+main_file=day$1.py
+test_file=tests/test_day$1.py
+main_input_file=inputs/day$1.txt
+test_input_file=tests/test_inputs/test_day$1.txt
+
+if test -f $main_file; then
+    echo "$main_file already exists"
+else
+    cp template.py $main_file
+fi
+
+if test -f $test_file; then
+    echo "$test_file already exists"
+else
+    cp tests/test_template.py $test_file
+fi
+
+if test -f $main_input_file; then
+    echo "$main_input_file already exists"
+else
+    touch $main_input_file
+fi
+
+if test -f $test_input_file; then
+    echo "$test_input_file already exists"
+else
+    touch $test_input_file
+fi
+
+# open all in vscode if available
+if command -v code &> /dev/null; then
+    code ${main_file} ${main_input_file} ${test_file} ${test_input_file}
+fi
