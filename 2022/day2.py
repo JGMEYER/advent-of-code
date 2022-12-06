@@ -1,31 +1,15 @@
-from enum import Enum, IntEnum
-
 from common.input import auto_read_input
-
-
-class RPSType(IntEnum):
-    # Core logic depends on these values
-    ROCK = 0
-    PAPER = 1
-    SCISSORS = 2
-
 
 MOVE_MAP = {
     # Opponent
-    'A': RPSType.ROCK,
-    'B': RPSType.PAPER,
-    'C': RPSType.SCISSORS,
+    'A': 0,  # Rock
+    'B': 1,  # Paper
+    'C': 2,  # Scissors
     # You
-    'X': RPSType.ROCK,
-    'Y': RPSType.PAPER,
-    'Z': RPSType.SCISSORS,
+    'X': 0,  # Rock     or Lose
+    'Y': 1,  # Paper    or Draw
+    'Z': 2,  # Scissors or Win
 }
-
-
-class GameResult(Enum):
-    LOSE = 0
-    TIE = 1
-    WIN = 2
 
 
 def _parse_input(lines):
@@ -37,17 +21,27 @@ def _parse_input(lines):
     return moves
 
 
-def _round_outcome_score(opp_move: RPSType, your_move: RPSType):
-    if opp_move.value == your_move.value:
+def _round_outcome_score(opp_move: int, your_move: int) -> int:
+    if opp_move == your_move:
         return 3  # Tie
-    elif (opp_move.value + 1) % 3 == your_move.value:
+    elif (opp_move + 1) % 3 == your_move:
         return 6  # Win
     else:
         return 0  # Loss
 
 
-def score(opp_move: RPSType, your_move: RPSType):
-    return (your_move.value + 1) + _round_outcome_score(opp_move, your_move)
+def score(opp_move: int, your_move: int) -> int:
+    return (your_move + 1) + _round_outcome_score(opp_move, your_move)
+
+
+def determine_move(opp_move: int, desired_outcome: int):
+    match desired_outcome:
+        case 0:  # Lose
+            return (opp_move + 2) % 3
+        case 1:  # Draw
+            return opp_move
+        case 2:  # Win
+            return (opp_move + 1) % 3
 
 
 def part1():
@@ -56,8 +50,14 @@ def part1():
 
 
 def part2():
-    _ = _parse_input(auto_read_input())
-    return None
+    moves = _parse_input(auto_read_input())
+
+    total_score = 0
+    for opp_move, desired_outcome in moves:
+        your_move = determine_move(opp_move, desired_outcome)
+        total_score += score(opp_move, your_move)
+
+    return total_score
 
 
 if __name__ == "__main__":
