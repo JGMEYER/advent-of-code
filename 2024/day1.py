@@ -1,6 +1,5 @@
 from common.input import auto_read_input
 
-
 """
 --- Day 1: Historian Hysteria ---
 
@@ -45,6 +44,7 @@ To find the total distance between the left list and the right list, add up the 
 Your actual left and right lists contain many location IDs. What is the total distance between your lists?
 """
 
+
 def _parse_input(lines):
     list1, list2 = [], []
     for line in lines:
@@ -54,9 +54,18 @@ def _parse_input(lines):
     return list1, list2
 
 
+def calculate_distances(list1, list2):
+    """Calculate sum of distances between arrays once sorted."""
+    assert len(list1) == len(list2)
+    list1_sorted, list2_sorted = sorted(list1), sorted(list2)
+    distances = 0
+    for idx in range(len(list1_sorted)):
+        distances += abs(list1_sorted[idx] - list2_sorted[idx])
+    return distances
+
 def part1():
-    _ = _parse_input(auto_read_input())
-    return None
+    list1, list2 = _parse_input(auto_read_input())
+    return calculate_distances(list1, list2)
 
 
 def part2():
