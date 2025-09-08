@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "aoc"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["JGMEYER <meyer.justian@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.10.8"
+python = "3.11.4"
 pytest = "^7.2.0"
 
 
