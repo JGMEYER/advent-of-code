@@ -46,8 +46,12 @@ Your actual left and right lists contain many location IDs. What is the total di
 """
 
 def _parse_input(lines):
-    ## Start here
-    return None
+    list1, list2 = [], []
+    for line in lines:
+        v1, v2 = line.split("   ")
+        list1.append(int(v1))
+        list2.append(int(v2))
+    return list1, list2
 
 
 def part1():
